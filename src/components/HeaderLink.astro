@@ -1,12 +1,9 @@
+<!-- components/HeaderLink.astro -->
 ---
-import type { HTMLAttributes } from 'astro/types';
-
-type Props = HTMLAttributes<'a'>;
+export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
 
 const { href, class: className, ...props } = Astro.props;
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
+const isActive = href === Astro.url.pathname;
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>
@@ -14,11 +11,17 @@ const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 </a>
 <style>
 	a {
-		display: inline-block;
 		text-decoration: none;
+		color: #8d6e7c;
+		font-weight: 500;
+		letter-spacing: 1px;
+		font-size: 1rem;
+		transition: color 0.2s;
+	}
+	a:hover {
+		color: #6c5360;
 	}
 	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
+		font-weight: 700;
 	}
 </style>
